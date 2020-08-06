@@ -126,18 +126,18 @@ def create_plot(file_path="data_input/data.csv", id=['936', '1178']):
 
   # Create a grouped dataframe based on campaign id, age group, and reporting date
   # Calculate the total converision of each group
-  grouped = campaigns.groupby(by=['___', '___', '___'], as_index=False)['___'].___
+  grouped = campaigns.groupby(by=['campaign_id', 'age', 'reporting_start'], as_index=False)['total_conversion'].sum()
 
   fig = plt.figure(1, figsize=(15,6))
 
   # Iterate to create 1 plot campaign at a time
   for i, campaign in enumerate(grouped.campaign_id.unique()):
     plt.subplot(1, len(id), i+1)
-    
-    df = grouped[grouped[___] == campaign].loc[:,['age', 'reporting_start', 'total_conversion']]
+
+    df = grouped[grouped['campaign_id'] == campaign].loc[:,['age', 'reporting_start', 'total_conversion']]
     df['reporting_start'] = df['reporting_start'].dt.date
-    pivot = df.pivot(index='___', columns='___', values='___').fillna(0)
-    pivot.plot.bar(ax=plt.gca())
+    pivot = df.pivot(index='reporting_start', columns='age', values='total_conversion').fillna(0)
+    pivot.plot.bar(ax=plt.gca(), title='Campaign ID: {}'.format(campaign))
 
   fig.suptitle('Campaign Conversion per Age Group', fontsize=20)
   fig.autofmt_xdate()
@@ -155,11 +155,11 @@ def main(subject, \
   Main function for application
   """
 
-  # // TODO: CHALLENGE 1
+  # // CHALLENGE 1
   # // Understanding function
   names, emails = extract_contacts(contact_file=contact_file)
 
-  # // TODO: CHALLENGE 2
+  # // CHALLENGE 2
   # // Extract data and prepare template email
   template = create_template(template_file)
   data_dict = extract_summary(data_file)

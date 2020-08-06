@@ -36,17 +36,17 @@ def extract_summary(file_path="data_input/data.csv", id=['936','1178']):
   campaigns = campaigns[campaigns.spent > 0]
 
   # Make sure to passed in appropriate preprocessing before extracting the start and end date
-  campaigns['reporting_start'] = ___
-  start_date = ___.min().strftime(format="%d %b %Y")
-  end_date = ___.max().strftime(format="%d %b %Y")
+  campaigns['reporting_start'] = pd.to_datetime(campaigns['reporting_start'], format='%d/%m/%Y')
+  start_date = campaigns['reporting_start'].min().strftime(format="%d %b %Y")
+  end_date = campaigns['reporting_start'].max().strftime(format="%d %b %Y")
 
-  total_spent = int(___.sum())
-  total_conversion = int(___.sum())
+  total_spent = int(campaigns['spent'].sum())
+  total_conversion = int(campaigns['total_conversion'].sum())
 
   # Create a cost per conversion dictionary per campaign
   # Cost per conversion is spent divided by total conversion
-  cpc = campaigns.groupby(['campaign_id'])[[___, ___]].sum()
-  cpc['CPC'] = cpc[___]/cpc[___]
+  cpc = campaigns.groupby(['campaign_id'])[['spent', 'total_conversion']].sum()
+  cpc['CPC'] = cpc['spent']/cpc['total_conversion']
   cpc_each = dict()
   for each in id:
     cpc_each[each] = round(float(cpc[cpc.index == each]['CPC']), 2)

@@ -148,7 +148,7 @@ def create_plot(file_path="data_input/data.csv", id=['936', '1178']):
   return(imagename)
 
 def main(subject, \
-  contact_file='___', \
+  contact_file='templates/contacts.txt', \
   template_file='templates/body.txt', \
   data_file='data_input/data.csv'):
   """   
@@ -164,7 +164,7 @@ def main(subject, \
   template = create_template(template_file)
   data_dict = extract_summary(data_file)
 
-  # // TODO: CHALLENGE 3
+  # // CHALLENGE 3
   # // Log in into Outlook email account
   # // Please use environment variable for security purposes
   s = authenticate_account(EMAIL=os.environ['EMAIL_ADDRESS'], \
@@ -187,7 +187,7 @@ def main(subject, \
     # add in the message body
     msg.attach(MIMEText(message, 'plain'))
 
-    # // TODO: CHALLENGE 4
+    # // CHALLENGE 4
     # // Create, save, and attach plot
     image_name=create_plot(data_file)
 

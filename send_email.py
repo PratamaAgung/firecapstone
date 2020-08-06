@@ -89,12 +89,12 @@ def compose_email(template, name, data_dict):
   """
   composed = template.substitute(
     PERSON_NAME=name,
-    START_DATE=data_dict[___],
-    END_DATE=data_dict[___],
-    TOTAL_SPENT="{:,}".format(data_dict[___]),
-    TOTAL_CONVERSION="{:,}".format(data_dict[___]),
+    START_DATE=data_dict['start_date'],
+    END_DATE=data_dict['end_date'],
+    TOTAL_SPENT="{:,}".format(data_dict['total_spent']),
+    TOTAL_CONVERSION="{:,}".format(data_dict['total_conversion']),
     CPC=unroll_sentence(data_dict['cpc']),
-    GITHUB_LINK='https://github.com/tiaradwiputri/fire-capstone'
+    GITHUB_LINK='https://github.com/PratamaAgung/firecapstone'
   )
   return composed
 
